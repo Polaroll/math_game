@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Game with Character</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        button {
+            position: center;
+        }
+
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        #answer {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        #result {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
+        #character {
+            font-size: 32px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="question"></div>
+    <input type="text" id="answer" placeholder="Your Answer">
+    <button onclick="checkAnswer()">Submit</button>
+    <div id="result"></div>
+    <div id="character">🚶</div>
+    
+    <script>
+        let answer;
+        let position = 0; // Initial position of the character
+
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            answer = num1 + num2;
+            document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
+        }
+
+        function updateCharacter() {
+            const characterElement = document.getElementById('character');
+
+            characterElement.style.marginTop = position + 'px';
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            if (isNaN(userAnswer)) {
+                document.getElementById('result').innerText = 'Please enter a valid number.';
+                return;
+            }
+
+            const resultMessage = userAnswer === answer ? 'Correct!' : 'Incorrect. Try again.';
+
+            document.getElementById('result').innerText = resultMessage;
+
+            // Update position based on the correctness of the answer
+            if (userAnswer === answer) {
+                position += 50; // Move forward for a correct answer
+            } else {
+                position -= 50; // Move backward for an incorrect answer
+            }
+
+            // Update the character's position
+            updateCharacter();
+
+            // Display a new question after checking the answer
+            generateQuestion();
+
+            // Clear the answer input
+            document.getElementById('answer').value = '';
+        }
+
+        // Initial setup
+        generateQuestion();
+        updateCharacter();
+    </script>
+
+</body>
+</html>
