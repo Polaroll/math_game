@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            position: relative;
         }
 
         button {
@@ -32,6 +33,7 @@
         #character {
             font-size: 32px;
             margin-top: 20px;
+            transition: margin-top 0.3s ease;
         }
     </style>
 </head>
@@ -46,6 +48,8 @@
     <script>
         let answer;
         let position = 0; // Initial position of the character
+        let maxPosition;
+        const minPosition = 0;
 
         function generateQuestion() {
             const num1 = Math.floor(Math.random() * 10) + 1;
@@ -56,8 +60,9 @@
 
         function updateCharacter() {
             const characterElement = document.getElementById('character');
+            const clampedPosition = Math.min(Math.max(position, minPosition), maxPosition);
 
-            characterElement.style.marginTop = position + 'px';
+            characterElement.style.marginTop = clampedPosition + 'px';
         }
 
         function checkAnswer() {
@@ -88,9 +93,20 @@
             document.getElementById('answer').value = '';
         }
 
+        // Resize Function
+        function updateMaxPosition() {
+            const screenHeight = window.innerHeight;
+            const characterHeight = document.getElementById('character').offsetHeight;
+            maxPosition = screenHeight - characterHeight - 20;
+            updateCharacter();
+        }
+
         // Initial setup
         generateQuestion();
-        updateCharacter();
+        updateMaxPosition();
+
+        // Window resized in real time
+        window.addEventListener('resize', updateMaxPosition);
     </script>
 
 </body>
