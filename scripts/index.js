@@ -25,7 +25,7 @@ function genSubtraction(difficulty)
 
     const num1 = Math.floor(Math.random() * 10) + 1;        // Generates number between 1 and 10 inclusive
     const num2 = Math.floor(Math.random() * 10) + 1;
-    answer = num1 + num2;
+    answer = num1 - num2;
 
     return (num1, num2, answer);
 
@@ -36,13 +36,12 @@ function genMultiplication(difficulty)
     // Generates a randomized multiplication equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
 
+    // Code goes here...
     const num1 = Math.floor(Math.random() * 10) + 1;        // Generates number between 1 and 10 inclusive
     const num2 = Math.floor(Math.random() * 10) + 1;
-    answer = num1 + num2;
+    answer = num1 * num2;
 
     return (num1, num2, answer);
-
-    // Code goes here...
 }
 function genDivision(difficulty)
 {
@@ -52,7 +51,7 @@ function genDivision(difficulty)
     // Code goes here...
     const num1 = Math.floor(Math.random() * 10) + 1;        // Generates number between 1 and 10 inclusive
     const num2 = Math.floor(Math.random() * 10) + 1;
-    answer = num1 + num2;
+    answer = num1 / num2;
 
     return (num1, num2, answer);
 }
