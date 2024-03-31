@@ -43,18 +43,38 @@ function genMultiplication(difficulty)
 
     return (num1, num2, answer);
 }
-function genDivision(difficulty)
-{
-    // Generates a randomized division equation using only whole positive numbers. 
-    // Returns a tuple of 3 integers being num1, num2, and  answer
+// function genDivision(difficulty)
+// {
+//     // Generates a randomized division equation using only whole positive numbers. 
+//     // Returns a tuple of 3 integers being num1, num2, and  answer
 
-    // Code goes here...
-    const num1 = Math.floor(Math.random() * 10) + 1;        // Generates number between 1 and 10 inclusive
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    answer = num1 / num2;
+//     // Code goes here...
+//     const num1 = Math.floor(Math.random() * 10) + 1;        // Generates number between 1 and 10 inclusive
+//     const num2 = Math.floor(Math.random() * 10) + 1;
+//     answer = num1 / num2;
 
-    return (num1, num2, answer);
+//     return (num1, num2, answer);
+// }
+
+
+function genDivision(difficulty) {
+    
+    let range = 10; 
+    let maxNum2 = Math.floor(range / 2); 
+
+    const num2 = Math.floor(Math.random() * maxNum2) + 1; 
+    const maxMultiplier = Math.floor(range / num2); 
+    const multiplier = Math.floor(Math.random() * maxMultiplier) + 1; 
+    const num1 = num2 * multiplier; 
+    const answer = num1 / num2; 
+
+    return [num1, num2, answer];
 }
+
+// Example usage:
+const [num1, num2, answer] = genDivision();
+console.log(`Division equation: ${num1} / ${num2} = ${answer}`);
+
 
 
 // UPDATE HTML FUNCTIONS
