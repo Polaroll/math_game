@@ -1,11 +1,13 @@
 const userAnswerElement   = document.getElementById("userAnswer");
 const question            = document.getElementById("question");
 const result              = document.getElementById("result");
+const score               = document.getElementById("score");
 const gameContainer       = document.getElementById("game");
 gameContainer.style.display = "none";
 
 // Global Variables
 var difficulty = 1;
+var currentScore = 0;
 
 
 // EQUATION GENERATION FUNCTIONS
@@ -16,9 +18,10 @@ function genAddition(difficulty = 1)
     // Generates a randomized addition equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
     //
+    const range = difficulty * 10;
 
-    const num1 = Math.floor(Math.random() * 12) + 1;        // Generates number between 1 and 10 inclusive
-    const num2 = Math.floor(Math.random() * 12) + 1;
+    const num1 = Math.floor(Math.random() * range) + 1;        // Generates number between 1 and 10 inclusive
+    const num2 = Math.floor(Math.random() * range) + 1;
     answer = num1 + num2;
 
     return [num1, num2, '+'];
@@ -29,9 +32,10 @@ function genSubtraction(difficulty = 1)
     // Generates a randomized subtraction equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
     // 
+    const range = difficulty * 10;
 
-    const num1 = Math.floor(Math.random() * 12) + 1;        // Generates number between 1 and 10 inclusive
-    const num2 = Math.floor(Math.random() * 12) + 1;
+    const num1 = Math.floor(Math.random() * range) + 1;        // Generates number between 1 and 10 inclusive
+    const num2 = Math.floor(Math.random() * range) + 1;
 
     if (num1 > num2)
     {
@@ -50,9 +54,10 @@ function genMultiplication(difficulty = 1)
     // Generates a randomized multiplication equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
     // 
+    const range = difficulty * 10;
 
-    const num1 = Math.floor(Math.random() * 12) + 1;        // Generates number between 1 and 10 inclusive
-    const num2 = Math.floor(Math.random() * 12) + 1;
+    const num1 = Math.floor(Math.random() * range) + 1;        // Generates number between 1 and 10 inclusive
+    const num2 = Math.floor(Math.random() * range) + 1;
     answer = num1 * num2;
 
     return [num1, num2, '*'];
@@ -64,14 +69,11 @@ function genDivision(difficulty = 1)
     // Returns a tuple of 3 integers being num1, num2, and  answer
     // 
 
-    let range = 10; 
-    let maxNum2 = Math.floor(range / 2); 
+    const range = difficulty * 10;
 
-    const num2 = Math.floor(Math.random() * maxNum2) + 1; 
-    const maxMultiplier = Math.floor(range / num2); 
-    const multiplier = Math.floor(Math.random() * maxMultiplier) + 1; 
-    const num1 = num2 * multiplier; 
-    const answer = num1 / num2; 
+    let num2 = Math.floor(Math.random() * range + 1);
+    let answer = Math.floor(Math.random() * range + 1);
+    let num1 = num2 * answer;
 
     return [num1, num2, '÷'];
 }
@@ -94,7 +96,7 @@ function checkAnswer() {
     const num1 = parseInt(questionList[0]);
     const num2 = parseInt(questionList[2]);
 
-
+    var correct = false;
 
     // Fetch the userAnswerElement again from the DOM
     const userAnswerElement = document.getElementById("userAnswer");
@@ -110,19 +112,59 @@ function checkAnswer() {
     {
         case 'addition':
             // Check if the user's answer matches the correct answer
-            resultMessage = userAnswer === num1 + num2 ? 'Correct!' : 'Incorrect. Try again.';
+            // resultMessage = userAnswer === num1 + num2 ? 'Correct!' : 'Incorrect. Try again.';
+            if (userAnswer == (num1 + num2)) {
+                resultMessage = "Correct!";
+                correct = true;
+                updateScore(correct);
+            }
+            else {
+                resultMessage = "Incorrect. Try Again.";
+                correct = false;
+                updateScore(correct);
+            }
             break;
         case 'subtraction':
             // Check if the user's answer matches the correct answer
-            resultMessage = userAnswer === num1 - num2 ? 'Correct!' : 'Incorrect. Try again.';
+            // resultMessage = userAnswer === num1 - num2 ? 'Correct!' : 'Incorrect. Try again.';
+            if (userAnswer == (num1 - num2)) {
+                resultMessage = "Correct!";
+                correct = true;
+                updateScore(correct);
+            }
+            else {
+                resultMessage = "Incorrect. Try Again.";
+                correct = false;
+                updateScore(correct);
+            }
             break;
         case 'multiplication':
             // Check if the user's answer matches the correct answer
-            resultMessage = userAnswer === num1 * num2 ? 'Correct!' : 'Incorrect. Try again.';
+            // resultMessage = userAnswer === num1 * num2 ? 'Correct!' : 'Incorrect. Try again.';
+            if (userAnswer == (num1 * num2)) {
+                resultMessage = "Correct!";
+                correct = true;
+                updateScore(correct);
+            }
+            else {
+                resultMessage = "Incorrect. Try Again.";
+                correct = false;
+                updateScore(correct);
+            }
             break;
         case 'division':
             // Check if the user's answer matches the correct answer
-            resultMessage = userAnswer === num1 / num2 ? 'Correct!' : 'Incorrect. Try again.';
+            // resultMessage = userAnswer === num1 / num2 ? 'Correct!' : 'Incorrect. Try again.';
+            if (userAnswer == (num1 / num2)) {
+                resultMessage = "Correct!";
+                correct = true;
+                updateScore(correct);
+            }
+            else {
+                resultMessage = "Incorrect. Try Again.";
+                correct = false;
+                updateScore(correct);
+            }
             break;
     }
 
@@ -178,6 +220,18 @@ function setHard()
 {
     difficulty = 3;
     runGame();
+}
+
+function updateScore(correct) {
+    if (correct == true) {
+        currentScore++;
+        score.innerHTML = currentScore;
+    }
+    else {
+        currentScore--;
+        score.innerHTML = currentScore;
+    }
+    return;
 }
 
 function runGame()
