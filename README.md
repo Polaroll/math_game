@@ -13,11 +13,11 @@ We used JavaScript and HTML by first creating a simple website to hold our game,
 
 # Collaborators
 
-Ethan Houser
-Alex Giraldo
-Francesco Lezano Contreras
-Michael Munoz
-Sunny Yeung
+* Ethan Houser
+* Alex Giraldo
+* Francesco Lezano Contreras
+* Michael Munoz
+* Sunny Yeung
 
 # Useful Websites
 
