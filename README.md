@@ -1,32 +1,34 @@
 # Overview
 
-{Important!  Do not say in this section that this is college assignment.}
+This program is a simple math game for grade school. The website generates random math equations and has the user try to solve them. Correct answers are recorded in the score while incorrect answers have the user retry the question.
 
-{Provide a description of your team project.  Describe how to use the software.}
-
-{If this is an online class, then provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running and a walkthrough of the code.}
-
-[Software Demo Video](http://youtube.link.goes.here)
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+We used JavaScript and HTML by first creating a simple website to hold our game, then using JavaScript to run the logic of the game and update the HTML, making an interactive webpage.
 
-{Describe the programming language that you used and any libraries.}
+* JavaScript
+* HTML
+* CSS
 
 # Collaborators
 
-{Provide a list of everyone on your team}
+Ethan Houser
+Alex Giraldo
+Francesco Lezano Contreras
+Michael Munoz
+Sunny Yeung
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
+* [W3Schools](https://www.w3schools.com/js/)
+* [Mdn Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3
+* Add consequences, such as a timer or ending the game on too many wrong answers
+* Make the website look nicer through style changes
+* Add custom difficulty settings
+* Add more types of math equations that can generate
+* Allow for complex equation generation (equations with more than 2 values or multiple operator types)
+* Add a leaderboard system
