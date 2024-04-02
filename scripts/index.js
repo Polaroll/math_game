@@ -1,39 +1,44 @@
 const userAnswerElement   = document.getElementById("userAnswer");
 const question            = document.getElementById("question");
 const result              = document.getElementById("result");
-const score               = document.getElementById("score");
 const gameContainer       = document.getElementById("game");
+const scoreElement        = document.getElementById("score");
+
 gameContainer.style.display = "none";
 
 // Global Variables
-var difficulty = 1;
-var currentScore = 0;
+var difficulty = 12;
+var score = 0;
+var run = true;
+
+// Displays score as 0 before the game starts
+scoreElement.innerText = "Score: " + score;
 
 
 // EQUATION GENERATION FUNCTIONS
 
-function genAddition(difficulty = 1)
+function genAddition()
 {
     //
     // Generates a randomized addition equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
     //
-    const range = difficulty * 10;
 
+    const range = difficulty;
     const num1 = Math.floor(Math.random() * range) + 1;        // Generates number between 1 and 10 inclusive
     const num2 = Math.floor(Math.random() * range) + 1;
     answer = num1 + num2;
 
     return [num1, num2, '+'];
 }
-function genSubtraction(difficulty = 1)
+function genSubtraction()
 {
     //
     // Generates a randomized subtraction equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
     // 
-    const range = difficulty * 10;
 
+    const range = difficulty;
     const num1 = Math.floor(Math.random() * range) + 1;        // Generates number between 1 and 10 inclusive
     const num2 = Math.floor(Math.random() * range) + 1;
 
@@ -48,32 +53,35 @@ function genSubtraction(difficulty = 1)
         return [num2, num1, '-'];
     }
 }
-function genMultiplication(difficulty = 1)
+function genMultiplication()
 {
     // 
     // Generates a randomized multiplication equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
     // 
-    const range = difficulty * 10;
 
+    const range = difficulty;
     const num1 = Math.floor(Math.random() * range) + 1;        // Generates number between 1 and 10 inclusive
     const num2 = Math.floor(Math.random() * range) + 1;
     answer = num1 * num2;
 
     return [num1, num2, '*'];
 }
-function genDivision(difficulty = 1)
+function genDivision()
 {
     // 
     // Generates a randomized division equation using only whole positive numbers. 
     // Returns a tuple of 3 integers being num1, num2, and  answer
     // 
 
-    const range = difficulty * 10;
+    const range = difficulty; 
+    const maxNum2 = Math.floor(range / 2); 
 
-    let num2 = Math.floor(Math.random() * range + 1);
-    let answer = Math.floor(Math.random() * range + 1);
-    let num1 = num2 * answer;
+    const num2 = Math.floor(Math.random() * maxNum2) + 1; 
+    const maxMultiplier = Math.floor(range / num2); 
+    const multiplier = Math.floor(Math.random() * maxMultiplier) + 1; 
+    const num1 = num2 * multiplier; 
+    const answer = num1 / num2; 
 
     return [num1, num2, '÷'];
 }
@@ -96,7 +104,7 @@ function checkAnswer() {
     const num1 = parseInt(questionList[0]);
     const num2 = parseInt(questionList[2]);
 
-    var correct = false;
+
 
     // Fetch the userAnswerElement again from the DOM
     const userAnswerElement = document.getElementById("userAnswer");
@@ -112,64 +120,36 @@ function checkAnswer() {
     {
         case 'addition':
             // Check if the user's answer matches the correct answer
-            // resultMessage = userAnswer === num1 + num2 ? 'Correct!' : 'Incorrect. Try again.';
-            if (userAnswer == (num1 + num2)) {
-                resultMessage = "Correct!";
-                correct = true;
-                updateScore(correct);
-            }
-            else {
-                resultMessage = "Incorrect. Try Again.";
-                correct = false;
-                updateScore(correct);
-            }
+            resultMessage = userAnswer === num1 + num2 ? 'Correct!' : 'Incorrect. Try again.';
             break;
         case 'subtraction':
             // Check if the user's answer matches the correct answer
-            // resultMessage = userAnswer === num1 - num2 ? 'Correct!' : 'Incorrect. Try again.';
-            if (userAnswer == (num1 - num2)) {
-                resultMessage = "Correct!";
-                correct = true;
-                updateScore(correct);
-            }
-            else {
-                resultMessage = "Incorrect. Try Again.";
-                correct = false;
-                updateScore(correct);
-            }
+            resultMessage = userAnswer === num1 - num2 ? 'Correct!' : 'Incorrect. Try again.';
             break;
         case 'multiplication':
             // Check if the user's answer matches the correct answer
-            // resultMessage = userAnswer === num1 * num2 ? 'Correct!' : 'Incorrect. Try again.';
-            if (userAnswer == (num1 * num2)) {
-                resultMessage = "Correct!";
-                correct = true;
-                updateScore(correct);
-            }
-            else {
-                resultMessage = "Incorrect. Try Again.";
-                correct = false;
-                updateScore(correct);
-            }
+            resultMessage = userAnswer === num1 * num2 ? 'Correct!' : 'Incorrect. Try again.';
             break;
         case 'division':
             // Check if the user's answer matches the correct answer
-            // resultMessage = userAnswer === num1 / num2 ? 'Correct!' : 'Incorrect. Try again.';
-            if (userAnswer == (num1 / num2)) {
-                resultMessage = "Correct!";
-                correct = true;
-                updateScore(correct);
-            }
-            else {
-                resultMessage = "Incorrect. Try Again.";
-                correct = false;
-                updateScore(correct);
-            }
+            resultMessage = userAnswer === num1 / num2 ? 'Correct!' : 'Incorrect. Try again.';
             break;
     }
 
     // Display the result message
     result.innerText = resultMessage;
+
+    if (resultMessage == 'Correct!') 
+    {
+        score++; // Increment score if answer is correct
+        result.innerText = resultMessage;
+        scoreElement.innerText = "Score: " + score;
+    } 
+    
+    else 
+    {
+        result.innerText = resultMessage;
+    }
     
     // Loops the program when the answer is correct
     if (resultMessage == 'Correct!')
@@ -206,35 +186,68 @@ function updateQuestion(num1, num2, symbol)
 }
 
 
+// SET DIFFICULTY BUTTON FUNCTIONS
+
 function setEasy() 
 {
-    difficulty = 1;
+    difficulty = 12;
+     // Hides the difficulty options and displays the game conatiner
+     document.getElementById("difficulty").style.display = "none";
+     document.getElementById("game").style.display = ""; 
+    startTimer();
     runGame();
 }
-
 function setMedium()
 {
-    difficulty = 2;
+    difficulty = 15;
+     // Hides the difficulty options and displays the game conatiner
+     document.getElementById("difficulty").style.display = "none";
+     document.getElementById("game").style.display = ""; 
+    startTimer();
     runGame();
 }
-
 function setHard()
 {
-    difficulty = 3;
+    difficulty = 20;
+     // Hides the difficulty options and displays the game conatiner
+     document.getElementById("difficulty").style.display = "none";
+     document.getElementById("game").style.display = "";
+
+    startTimer();
     runGame();
 }
 
-function updateScore(correct) {
-    if (correct == true) {
-        currentScore++;
-        score.innerHTML = currentScore;
+function startTimer() {
+    var timerElement = document.getElementById("timer");
+    var minutes = 0
+    var seconds = 0;
+
+    // Update timer every second
+    var timerInterval = setInterval(function() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            clearInterval(timerInterval);
+        }
+
+        // Format the time
+        var formattedTime = pad(minutes) + ":" + pad(seconds);
+
+        // Display the time
+        timerElement.textContent = formattedTime;
+    }, 1000);
+
+    // Function to add leading zero to single digit numbers
+    function pad(number) {
+        return (number < 10 ? '0' : '') + number;
     }
-    else {
-        currentScore--;
-        score.innerHTML = currentScore;
-    }
-    return;
+
+    // Return the interval ID so it can be stopped later if needed
+    return timerInterval;
 }
+
+// GAME LOGIC
 
 function runGame()
 {
@@ -244,15 +257,11 @@ function runGame()
     // displays the question until a correct answer is submitted.
     // 
 
-    // Hides the difficulty options and displays the game conatiner
-    document.getElementById("difficulty").style.display = "none";
-    document.getElementById("game").style.display = "";
-
     // Generates random number between 1-4
     const gen = Math.floor(Math.random() * 4) + 1;
-
-    // Initiate and have a default value for equation
+    
     let equation = [0,0,'error'];
+    // Initiate and have a default value for equation
     switch (gen)
     {
         case 1:
