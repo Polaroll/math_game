@@ -9,6 +9,7 @@ gameContainer.style.display = "none";
 // Global Variables
 var difficulty = 12;
 var score = 0;
+var run = true;
 
 // Displays score as 0 before the game starts
 scoreElement.innerText = "Score: " + score;
@@ -217,6 +218,7 @@ function setEasy()
      // Hides the difficulty options and displays the game conatiner
      document.getElementById("difficulty").style.display = "none";
      document.getElementById("game").style.display = ""; 
+    startTimer();
     runGame();
 }
 function setMedium()
@@ -225,6 +227,7 @@ function setMedium()
      // Hides the difficulty options and displays the game conatiner
      document.getElementById("difficulty").style.display = "none";
      document.getElementById("game").style.display = ""; 
+    startTimer();
     runGame();
 }
 function setHard()
@@ -234,7 +237,38 @@ function setHard()
      document.getElementById("difficulty").style.display = "none";
      document.getElementById("game").style.display = "";
 
+    startTimer();
     runGame();
+}
+
+function startTimer() {
+    var timerElement = document.getElementById("timer");
+    var minutes = 0
+    var seconds = 0;
+
+    // Update timer every second
+    var timerInterval = setInterval(function() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            clearInterval(timerInterval);
+        }
+
+        // Format the time
+        var formattedTime = pad(minutes) + ":" + pad(seconds);
+
+        // Display the time
+        timerElement.textContent = formattedTime;
+    }, 1000);
+
+    // Function to add leading zero to single digit numbers
+    function pad(number) {
+        return (number < 10 ? '0' : '') + number;
+    }
+
+    // Return the interval ID so it can be stopped later if needed
+    return timerInterval;
 }
 
 // GAME LOGIC
@@ -247,12 +281,11 @@ function runGame()
     // displays the question until a correct answer is submitted.
     // 
 
-   
     // Generates random number between 1-4
     const gen = Math.floor(Math.random() * 4) + 1;
-
-    // Initiate and have a default value for equation
+    
     let equation = [0,0,'error'];
+    // Initiate and have a default value for equation
     switch (gen)
     {
         case 1:
