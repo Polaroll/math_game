@@ -211,11 +211,13 @@ function setEasy()
     difficulty = 1;
     runGame();
 }
+
 function setMedium()
 {
     difficulty = 2;
     runGame();
 }
+
 function setHard()
 {
     difficulty = 3;
