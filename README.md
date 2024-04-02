@@ -10,6 +10,7 @@ We used JavaScript and HTML by first creating a simple website to hold our game,
 * JavaScript
 * HTML
 * CSS
+* GitHub
 
 # Collaborators
 
