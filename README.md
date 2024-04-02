@@ -5,7 +5,7 @@ This program is a simple math game for grade school. The website generates rando
 
 # Development Environment
 
-We used JavaScript and HTML by first creating a simple website to hold our game, then using JavaScript to run the logic of the game and update the HTML, making an interactive webpage.
+We used JavaScript and HTML by first creating a simple website to hold our game, then using JavaScript to run the logic of the game and update the HTML, making an interactive webpage. GitHub was used to work on the program in separate branches for ease of use and to simplify combining our code.
 
 * JavaScript
 * HTML
